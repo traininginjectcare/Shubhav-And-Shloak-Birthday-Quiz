@@ -1,0 +1,46 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // Default deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Teams collection
+    match /teams/{teamId} {
+      allow read: if true;
+      allow create: if isValidId(teamId)
+                    && incoming().name is string
+                    && incoming().name.size() > 0
+                    && incoming().name.size() <= 60
+                    && incoming().score is number
+                    && incoming().isLoggedIn is bool
+                    && incoming().buzzerPressed is bool;
+      allow update: if isValidId(teamId)
+                    && (
+                      // Contestant pressing buzzer or logging in
+                      incoming().diff(existing()).affectedKeys().hasAny(['buzzerPressed', 'buzzerTime', 'isLoggedIn', 'score', 'name', 'pin'])
+                    );
+      allow delete: if true;
+    }
+
+    // Game state document
+    match /gameState/{stateId} {
+      allow read: if true;
+      allow write: if isValidId(stateId);
+    }
+  }
+}

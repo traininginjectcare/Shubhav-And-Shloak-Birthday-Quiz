@@ -1,0 +1,128 @@
+{
+  "entities": {
+    "Team": {
+      "title": "Team",
+      "description": "Represents a participating family or team in the quiz competition",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the team"
+        },
+        "name": {
+          "type": "string",
+          "description": "Family or team display name",
+          "maxLength": 60
+        },
+        "score": {
+          "type": "number",
+          "description": "Current cumulative score points"
+        },
+        "isLoggedIn": {
+          "type": "boolean",
+          "description": "Whether the team is logged in and active"
+        },
+        "buzzerPressed": {
+          "type": "boolean",
+          "description": "Flag indicating if this team pressed the buzzer for the active question"
+        },
+        "buzzerTime": {
+          "type": "number",
+          "description": "Timestamp in milliseconds when buzzer was pressed"
+        },
+        "pin": {
+          "type": "string",
+          "description": "Security PIN used to sign into the team profile",
+          "maxLength": 10
+        }
+      },
+      "required": ["name", "score", "isLoggedIn", "buzzerPressed"]
+    },
+    "GameState": {
+      "title": "GameState",
+      "description": "Master synchronized state of the live quiz show",
+      "type": "object",
+      "properties": {
+        "currentRound": {
+          "type": "string",
+          "description": "Active round title",
+          "maxLength": 100
+        },
+        "currentQuestion": {
+          "type": "string",
+          "description": "Current question text shown to audience",
+          "maxLength": 500
+        },
+        "questionNumber": {
+          "type": "number",
+          "description": "Current question index in round"
+        },
+        "mediaUrl": {
+          "type": "string",
+          "description": "URL to MP4 video, YouTube link, or image file",
+          "maxLength": 500
+        },
+        "mediaType": {
+          "type": "string",
+          "enum": ["none", "image", "video", "youtube"],
+          "description": "Type of media to render on projector"
+        },
+        "timerStatus": {
+          "type": "string",
+          "enum": ["idle", "running", "paused", "ended"],
+          "description": "Countdown timer execution status"
+        },
+        "timerDuration": {
+          "type": "number",
+          "description": "Total countdown duration in seconds (e.g. 15 or 60)"
+        },
+        "timerEndTime": {
+          "type": "number",
+          "description": "Epoch timestamp in milliseconds when timer expires"
+        },
+        "buzzerActive": {
+          "type": "boolean",
+          "description": "Whether buzzers are currently enabled for contestants"
+        },
+        "buzzerLocked": {
+          "type": "boolean",
+          "description": "Whether buzzer is locked after first team buzzed"
+        },
+        "buzzedTeam": {
+          "type": "string",
+          "description": "Name of the first team that pressed the buzzer",
+          "maxLength": 60
+        },
+        "showWinner": {
+          "type": "boolean",
+          "description": "Grand finale trigger flag to reveal winner on projector screen"
+        },
+        "winnerTeam": {
+          "type": "string",
+          "description": "Name of winning team",
+          "maxLength": 60
+        },
+        "screenState": {
+          "type": "string",
+          "enum": ["idle", "question", "media", "winner"],
+          "description": "Primary visual mode on projector display"
+        },
+        "updatedAt": {
+          "type": "number",
+          "description": "Timestamp of last state modification"
+        }
+      },
+      "required": ["currentRound", "currentQuestion", "timerStatus", "showWinner", "buzzerActive"]
+    }
+  },
+  "firestore": {
+    "/teams/{teamId}": {
+      "schema": "Team",
+      "description": "Collection of contestant teams and scores"
+    },
+    "/gameState/{stateId}": {
+      "schema": "GameState",
+      "description": "Central singleton game state document (usually stateId = 'active')"
+    }
+  }
+}
