@@ -101,7 +101,7 @@ export const TieBreakerModal: React.FC<TieBreakerModalProps> = ({
                 Tie-Breaker Arena
               </h2>
               <p className="text-xs text-amber-200/70">
-                Shubhav &amp; Shloak&apos;s Birthday Quiz &bull; Sudden Death &amp; Closest Guess
+                Diwali Party Family Quiz &bull; Sudden Death &amp; Closest Guess
               </p>
             </div>
           </div>

@@ -29,7 +29,7 @@ import { DiyaIcon } from './components/DiyaIcon';
 import { soundEngine } from './utils/audio';
 
 // Default teams with simple editable names and NO team member names
-const INITIAL_BIRTHDAY_TEAMS: FinalistTeam[] = [
+const INITIAL_DIWALI_TEAMS: FinalistTeam[] = [
   {
     id: 'team-1',
     name: 'Team 1',
@@ -76,7 +76,8 @@ export default function App() {
   // Teams State - Clean editable teams without member names
   const [teams, setTeams] = useState<FinalistTeam[]>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('shubhav_shloak_birthday_quiz_teams_v2');
+      const saved = localStorage.getItem('diwali_party_quiz_teams_v1') || 
+                    localStorage.getItem('shubhav_shloak_birthday_quiz_teams_v2');
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
@@ -87,15 +88,16 @@ export default function App() {
           // ignore
         }
       }
-      localStorage.setItem('shubhav_shloak_birthday_quiz_teams_v2', JSON.stringify(INITIAL_BIRTHDAY_TEAMS));
+      localStorage.setItem('diwali_party_quiz_teams_v1', JSON.stringify(INITIAL_DIWALI_TEAMS));
     }
-    return INITIAL_BIRTHDAY_TEAMS;
+    return INITIAL_DIWALI_TEAMS;
   });
 
   // Question Bank State
   const [questions, setQuestions] = useState<StageQuestion[]>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('shubhav_shloak_birthday_questions_v2');
+      const saved = localStorage.getItem('diwali_party_questions_v1') || 
+                    localStorage.getItem('shubhav_shloak_birthday_questions_v2');
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
@@ -106,7 +108,7 @@ export default function App() {
           // ignore
         }
       }
-      localStorage.setItem('shubhav_shloak_birthday_questions_v2', JSON.stringify(INITIAL_PLACEHOLDER_QUESTIONS));
+      localStorage.setItem('diwali_party_questions_v1', JSON.stringify(INITIAL_PLACEHOLDER_QUESTIONS));
     }
     return INITIAL_PLACEHOLDER_QUESTIONS;
   });
@@ -114,7 +116,8 @@ export default function App() {
   // Active Round (1: Bollywood, 2: Mythology, 3: Sports & Current Affairs, 4: Finale)
   const [activeRoundId, setActiveRoundId] = useState<number>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('birthday_quiz_active_round');
+      const saved = localStorage.getItem('diwali_quiz_active_round') || 
+                    localStorage.getItem('birthday_quiz_active_round');
       return saved ? parseInt(saved, 10) : 1;
     }
     return 1;
@@ -123,7 +126,8 @@ export default function App() {
   // Score History Stack for UNDO
   const [scoreHistory, setScoreHistory] = useState<ScoreHistoryEntry[]>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('birthday_quiz_score_history');
+      const saved = localStorage.getItem('diwali_quiz_score_history') || 
+                    localStorage.getItem('birthday_quiz_score_history');
       if (saved) {
         try {
           return JSON.parse(saved);
@@ -148,19 +152,19 @@ export default function App() {
 
   // Persistence effects
   useEffect(() => {
-    localStorage.setItem('shubhav_shloak_birthday_quiz_teams_v2', JSON.stringify(teams));
+    localStorage.setItem('diwali_party_quiz_teams_v1', JSON.stringify(teams));
   }, [teams]);
 
   useEffect(() => {
-    localStorage.setItem('shubhav_shloak_birthday_questions_v2', JSON.stringify(questions));
+    localStorage.setItem('diwali_party_questions_v1', JSON.stringify(questions));
   }, [questions]);
 
   useEffect(() => {
-    localStorage.setItem('birthday_quiz_active_round', String(activeRoundId));
+    localStorage.setItem('diwali_quiz_active_round', String(activeRoundId));
   }, [activeRoundId]);
 
   useEffect(() => {
-    localStorage.setItem('birthday_quiz_score_history', JSON.stringify(scoreHistory));
+    localStorage.setItem('diwali_quiz_score_history', JSON.stringify(scoreHistory));
   }, [scoreHistory]);
 
   // Fullscreen listener
@@ -292,121 +296,127 @@ export default function App() {
     <div className="h-screen max-h-screen w-full bg-[#11061F] bg-radial from-[#240D3E] via-[#140626] to-[#0A0214] text-slate-100 flex flex-col font-sans selection:bg-[#FFE082] selection:text-[#1F0838] overflow-hidden select-none">
       
       {/* =========================================================================
-          SLIM REGAL FESTIVE HEADER: SHUBHAV & SHLOAK BIRTHDAY QUIZ
+          REGAL FESTIVE HEADER: PROMINENT TITLE + COMPACT 2-LINE ACTION GRID
           ========================================================================= */}
       <header className="bg-gradient-to-r from-[#170729]/95 via-[#290E4A]/95 to-[#170729]/95 border-b border-amber-400/40 px-3 sm:px-4 py-1.5 shadow-md shrink-0">
-        <div className="w-full flex items-center justify-between gap-2">
+        <div className="w-full flex items-center justify-between gap-3">
           
-          {/* Left: Birthday & Diwali Party Title */}
-          <div className="flex items-center gap-2 min-w-0">
-            <DiyaIcon size="sm" showSparkles={false} />
+          {/* Left: Prominent Diwali Party Title (Bold, Majestic, Never Cut Off) */}
+          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+            <DiyaIcon size="md" showSparkles={true} className="shrink-0" />
 
-            <div className="flex flex-col min-w-0">
-              <div className="flex items-center gap-1.5 leading-none">
-                <span className="text-[10px] text-amber-200/90 font-cinzel tracking-widest uppercase font-bold flex items-center gap-1">
-                  <Sparkles className="w-3 h-3 text-amber-300" />
-                  <span>Diwali Theme Birthday Party</span>
+            <div className="flex flex-col min-w-0 justify-center">
+              <div className="flex items-center gap-1.5 leading-none mb-0.5">
+                <span className="text-[10px] sm:text-[11px] text-amber-200 font-cinzel tracking-widest uppercase font-bold flex items-center gap-1">
+                  <Sparkles className="w-3 h-3 text-amber-300 animate-pulse" />
+                  <span>Festive Celebration &bull; Family Edition</span>
                 </span>
               </div>
-              <h1 className="font-cinzel font-black text-base sm:text-lg md:text-xl text-gold-gradient tracking-wide uppercase drop-shadow truncate">
-                Shubhav &amp; Shloak&apos;s Birthday Quiz
+              <h1 className="font-cinzel font-black text-xl sm:text-2xl md:text-3xl text-gold-gradient tracking-wide uppercase drop-shadow whitespace-nowrap">
+                Diwali Party Family Quiz
               </h1>
             </div>
           </div>
 
-          {/* Right: Master Control Actions */}
-          <div className="flex items-center gap-1.5 shrink-0">
-            
-            {/* Scoreboard Button */}
-            <button
-              onClick={() => setShowLeaderboard(true)}
-              className="px-3 py-1 rounded-xl bg-gradient-to-r from-amber-400 via-[#FFE082] to-amber-400 hover:brightness-110 text-stone-950 font-cinzel font-black text-xs tracking-wider shadow flex items-center gap-1.5 transition-transform active:scale-95 border border-white cursor-pointer"
-              title="Open Scoreboard"
-            >
-              <Trophy className="w-3.5 h-3.5 fill-stone-950" />
-              <span>SCOREBOARD</span>
-            </button>
+          {/* Right: Master Control Actions in a Compact 2-Line Mini-Grid */}
+          <div className="flex flex-col gap-1 items-end shrink-0">
+            {/* Top Row: Primary Live Stage Controls */}
+            <div className="flex items-center gap-1.5">
+              {/* Scoreboard Button */}
+              <button
+                onClick={() => setShowLeaderboard(true)}
+                className="px-2.5 py-0.5 rounded-lg bg-gradient-to-r from-amber-400 via-[#FFE082] to-amber-400 hover:brightness-110 text-stone-950 font-cinzel font-black text-xs tracking-wider shadow flex items-center gap-1 transition-transform active:scale-95 border border-white cursor-pointer"
+                title="Open Scoreboard"
+              >
+                <Trophy className="w-3 h-3 fill-stone-950" />
+                <span>SCOREBOARD</span>
+              </button>
 
-            {/* Timer Modal Button */}
-            <button
-              onClick={() => setShowFullScreenTimer(true)}
-              className="px-2.5 py-1 rounded-xl bg-purple-950/80 hover:bg-purple-900 border border-amber-400/80 text-amber-200 text-xs font-cinzel font-bold flex items-center gap-1 transition-colors shadow active:scale-95 cursor-pointer"
-              title="Open Stage Countdown Timer"
-            >
-              <Clock className="w-3.5 h-3.5 text-amber-300" />
-              <span className="hidden sm:inline">TIMER</span>
-            </button>
+              {/* Timer Modal Button */}
+              <button
+                onClick={() => setShowFullScreenTimer(true)}
+                className="px-2 py-0.5 rounded-lg bg-purple-950/80 hover:bg-purple-900 border border-amber-400/80 text-amber-200 text-xs font-cinzel font-bold flex items-center gap-1 transition-colors shadow active:scale-95 cursor-pointer"
+                title="Open Stage Countdown Timer"
+              >
+                <Clock className="w-3 h-3 text-amber-300" />
+                <span>TIMER</span>
+              </button>
 
-            {/* Teams Manager */}
-            <button
-              onClick={() => setShowTeamManager(true)}
-              className="px-2.5 py-1 rounded-xl bg-black/50 hover:bg-black/80 border border-amber-400/50 text-amber-200 text-xs font-bold flex items-center gap-1 transition-colors cursor-pointer"
-              title="Add or Rename Teams"
-            >
-              <Users className="w-3.5 h-3.5 text-amber-300" />
-              <span className="hidden md:inline">Teams</span>
-            </button>
+              {/* Tie-Breaker */}
+              <button
+                onClick={() => setShowTieBreaker(true)}
+                className="px-2 py-0.5 rounded-lg bg-black/50 hover:bg-black/80 border border-amber-400/50 text-amber-200 text-xs font-bold flex items-center gap-1 transition-colors cursor-pointer"
+                title="Tie-Breaker Arena"
+              >
+                <Zap className="w-3 h-3 text-amber-300" />
+                <span>Tie-Breaker</span>
+              </button>
 
-            {/* Question Bank Manager */}
-            <button
-              onClick={() => setShowQuestionManager(true)}
-              className="px-2.5 py-1 rounded-xl bg-black/50 hover:bg-black/80 border border-amber-400/50 text-amber-200 text-xs font-bold flex items-center gap-1 transition-colors cursor-pointer"
-              title="Manage Question Bank"
-            >
-              <FileText className="w-3.5 h-3.5 text-amber-300" />
-              <span className="hidden md:inline">Questions</span>
-            </button>
+              {/* Fullscreen Toggle */}
+              <button
+                onClick={handleToggleFullscreen}
+                className={`px-2 py-0.5 rounded-lg border text-xs font-cinzel font-bold flex items-center gap-1 transition-all shadow active:scale-95 cursor-pointer ${
+                  isFullscreen
+                    ? 'bg-amber-400 text-stone-950 border-amber-200 font-black'
+                    : 'bg-black/60 hover:bg-black/80 border-amber-400/60 text-amber-200'
+                }`}
+                title={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
+              >
+                {isFullscreen ? <Minimize className="w-3 h-3 text-stone-950" /> : <Maximize className="w-3 h-3 text-amber-300" />}
+                <span>{isFullscreen ? 'EXIT' : 'FULL'}</span>
+              </button>
+            </div>
 
-            {/* Tie-Breaker */}
-            <button
-              onClick={() => setShowTieBreaker(true)}
-              className="px-2.5 py-1 rounded-xl bg-black/50 hover:bg-black/80 border border-amber-400/50 text-amber-200 text-xs font-bold flex items-center gap-1 transition-colors cursor-pointer"
-              title="Tie-Breaker Arena"
-            >
-              <Zap className="w-3.5 h-3.5 text-amber-300" />
-              <span className="hidden lg:inline">Tie-Breaker</span>
-            </button>
+            {/* Bottom Row: Management & Audio Controls */}
+            <div className="flex items-center gap-1.5">
+              {/* Teams Manager */}
+              <button
+                onClick={() => setShowTeamManager(true)}
+                className="px-2 py-0.5 rounded-lg bg-black/50 hover:bg-black/80 border border-amber-400/50 text-amber-200 text-xs font-bold flex items-center gap-1 transition-colors cursor-pointer"
+                title="Add or Rename Teams"
+              >
+                <Users className="w-3 h-3 text-amber-300" />
+                <span>Teams</span>
+              </button>
 
-            {/* Sound Toggle */}
-            <button
-              onClick={handleToggleSound}
-              className={`p-1.5 rounded-xl border transition-colors cursor-pointer ${
-                isMuted 
-                  ? 'bg-rose-950/70 border-rose-700 text-rose-300' 
-                  : 'bg-black/50 border-amber-400/50 text-amber-300 hover:bg-black/70'
-              }`}
-              title={isMuted ? "Unmute Sound" : "Mute Sound Effects"}
-            >
-              {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-            </button>
+              {/* Question Bank Manager */}
+              <button
+                onClick={() => setShowQuestionManager(true)}
+                className="px-2 py-0.5 rounded-lg bg-black/50 hover:bg-black/80 border border-amber-400/50 text-amber-200 text-xs font-bold flex items-center gap-1 transition-colors cursor-pointer"
+                title="Manage Question Bank"
+              >
+                <FileText className="w-3 h-3 text-amber-300" />
+                <span>Questions</span>
+              </button>
 
-            {/* Fullscreen Toggle */}
-            <button
-              onClick={handleToggleFullscreen}
-              className={`px-2.5 py-1 rounded-xl border text-xs font-cinzel font-bold flex items-center gap-1 transition-all shadow active:scale-95 cursor-pointer ${
-                isFullscreen
-                  ? 'bg-amber-400 text-stone-950 border-amber-200 font-black'
-                  : 'bg-black/60 hover:bg-black/80 border-amber-400/60 text-amber-200'
-              }`}
-              title={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
-            >
-              {isFullscreen ? <Minimize className="w-3.5 h-3.5 text-stone-950" /> : <Maximize className="w-3.5 h-3.5 text-amber-300" />}
-              <span>{isFullscreen ? 'EXIT' : 'FULL'}</span>
-            </button>
+              {/* Sound Toggle */}
+              <button
+                onClick={handleToggleSound}
+                className={`px-2 py-0.5 rounded-lg border text-xs font-bold flex items-center gap-1 transition-colors cursor-pointer ${
+                  isMuted 
+                    ? 'bg-rose-950/70 border-rose-700 text-rose-300' 
+                    : 'bg-black/50 border-amber-400/50 text-amber-300 hover:bg-black/70'
+                }`}
+                title={isMuted ? "Unmute Sound" : "Mute Sound Effects"}
+              >
+                {isMuted ? <VolumeX className="w-3 h-3" /> : <Volume2 className="w-3 h-3" />}
+                <span>{isMuted ? 'Muted' : 'Sound'}</span>
+              </button>
+            </div>
           </div>
         </div>
       </header>
 
       {/* =========================================================================
-          SLIM 4 ROUND SELECTOR TABS
+          SLIM 4 ROUND SELECTOR TABS (BALANCED 4-COLUMN GRID, NEVER TRUNCATED)
           ========================================================================= */}
-      <section className="bg-black/50 border-b border-amber-400/30 px-3 sm:px-4 py-1 backdrop-blur-sm shrink-0">
-        <div className="w-full flex items-center gap-2 overflow-x-auto custom-scrollbar">
+      <section className="bg-black/50 border-b border-amber-400/30 px-2 sm:px-4 py-1 backdrop-blur-sm shrink-0">
+        <div className="w-full grid grid-cols-4 gap-1.5 sm:gap-2">
           {[
-            { id: 1, title: 'Round 1: Bollywood', badge: '🎬 MCQs' },
-            { id: 2, title: 'Round 2: Mythology', badge: '🪔 Ramayana & Mahabharata' },
-            { id: 3, title: 'Round 3: Sports & News', badge: '⚡ Buzzer' },
-            { id: 4, title: 'Round 4: Grand Finale', badge: '🌟 Easy / Difficult' },
+            { id: 1, title: 'R1: Bollywood', badge: '🎬 MCQs' },
+            { id: 2, title: 'R2: Mythology', badge: '🪔 Ramayana & Mahabharata' },
+            { id: 3, title: 'R3: Sports & News', badge: '⚡ Buzzer' },
+            { id: 4, title: 'R4: Grand Finale', badge: '🌟 Easy / Difficult' },
           ].map((round) => {
             const isSelected = round.id === activeRoundId;
 
@@ -414,18 +424,18 @@ export default function App() {
               <button
                 key={round.id}
                 onClick={() => setActiveRoundId(round.id)}
-                className={`flex-1 min-w-[170px] px-3 py-1.5 rounded-xl border transition-all flex items-center justify-between gap-1.5 text-left cursor-pointer ${
+                className={`px-2 sm:px-3 py-1 rounded-xl border transition-all flex items-center justify-between gap-1 text-left cursor-pointer ${
                   isSelected
                     ? 'bg-gradient-to-r from-[#391761] to-[#200A38] border-amber-400 shadow scale-[1.01]'
                     : 'bg-[#180A28]/80 hover:bg-[#230F3B] border-amber-900/40 text-stone-300'
                 }`}
               >
-                <span className={`font-cinzel font-bold text-xs sm:text-sm truncate block ${
+                <span className={`font-cinzel font-bold text-xs sm:text-sm whitespace-nowrap truncate ${
                   isSelected ? 'text-gold-bright' : 'text-stone-300'
                 }`}>
                   {round.title}
                 </span>
-                <span className="text-[10px] font-semibold text-amber-300/80 shrink-0">
+                <span className="text-[10px] font-semibold text-amber-300/80 shrink-0 hidden md:inline">
                   {round.badge}
                 </span>
               </button>
@@ -437,7 +447,7 @@ export default function App() {
       {/* =========================================================================
           MAIN LIVE STAGE QUIZ VIEW (FITS SCREEN WITHOUT VERTICAL SCROLLBARS)
           ========================================================================= */}
-      <main className="flex-1 min-h-0 px-3 sm:px-4 py-2 w-full flex flex-col overflow-hidden">
+      <main className="flex-1 min-h-0 px-2 sm:px-3 py-1.5 w-full flex flex-col overflow-hidden">
         <MainStageQuiz
           teams={teams}
           questions={questions}
@@ -457,10 +467,10 @@ export default function App() {
         <div className="flex items-center gap-1.5">
           <DiyaIcon size="sm" showSparkles={false} />
           <span className="font-cinzel font-bold text-xs text-gold-bright">
-            Shubhav &amp; Shloak&apos;s Birthday Quiz
+            Diwali Party Family Quiz
           </span>
           <span>•</span>
-          <span className="font-cinzel text-[11px] text-amber-300">Diwali Theme Celebration</span>
+          <span className="font-cinzel text-[11px] text-amber-300">Festive Celebration</span>
         </div>
 
         <div className="flex items-center gap-2">
@@ -475,7 +485,7 @@ export default function App() {
           )}
 
           <span className="text-[11px] text-amber-200/60 font-cinzel hidden sm:inline">
-            ✨ Wishing Shubhav &amp; Shloak A Very Happy Birthday! ✨
+            ✨ Wishing You &amp; Your Family A Very Happy &amp; Prosperous Diwali! ✨
           </span>
         </div>
       </footer>

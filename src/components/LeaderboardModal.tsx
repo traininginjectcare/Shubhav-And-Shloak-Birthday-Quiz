@@ -58,7 +58,7 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
                 Official Scoreboard
               </h2>
               <p className="text-xs sm:text-sm text-amber-200/90 font-medium font-outfit mt-0.5">
-                Shubhav &amp; Shloak&apos;s Birthday Quiz &bull; Diwali Celebration Leaderboard
+                Diwali Party Family Quiz &bull; Official Leaderboard
               </p>
             </div>
           </div>

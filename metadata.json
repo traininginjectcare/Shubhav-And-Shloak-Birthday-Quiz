@@ -1,6 +1,6 @@
 {
   "name": "Shubhav And Shloak Birthday Quiz",
-  "description": "Diwali theme birthday quiz show party for Shubhav and Shloak with pastel & glowy colors, animated diyas, sparkles, live buzzer, and stage displays.",
+  "description": "Diwali Party Family Quiz platform with pastel & glowy colors, animated diyas, sparkles, live buzzer, and stage displays.",
   "requestFramePermissions": [],
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"

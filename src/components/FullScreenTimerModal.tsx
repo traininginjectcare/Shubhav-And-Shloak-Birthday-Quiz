@@ -153,7 +153,7 @@ export const FullScreenTimerModal: React.FC<FullScreenTimerModalProps> = ({
               Stage Countdown Timer
             </h1>
             <p className="text-xs sm:text-sm text-amber-200/80 font-medium">
-              Shubhav &amp; Shloak&apos;s Birthday Quiz &bull; Diwali Celebration Timer
+              Diwali Party Family Quiz &bull; Stage Countdown Timer
             </p>
           </div>
         </div>
